@@ -1,19 +1,23 @@
-FROM node:10
+# Pull in the official lightweight version of Node 12.
+FROM node:12-slim
 
-# Create app directory
-WORKDIR /usr/src/app
+# Create and change to the app directory.
+WORKDIR /app
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-ADD package*.json ./
+COPY package.json .
+COPY yarn.lock .
 
-RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
+# Install production dependencies.
+RUN yarn install --production
 
-# Bundle app source
-ADD . .
+# Copy local codebase into the container image
+COPY . .
 
+# Compile down to ES5 with Babel
+RUN yarn build
 
-CMD [ "npm", "start" ]
+# Remove unused src directory
+RUN rm -rf src/
+
+# Start the api server
+CMD [ "yarn", "serve" ]
