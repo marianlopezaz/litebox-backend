@@ -1,8 +1,10 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import models, { connectDb } from './src/models';
-import routes from './src/routes';
+import models, { connectDb } from './models';
+import routes from './routes';
 
 const app = express();
 const port = process.env.PORT || 8080;
