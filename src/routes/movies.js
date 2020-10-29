@@ -1,10 +1,12 @@
 import { Router } from 'express';
+import { MOVIE_TYPES } from '../config/config';
 import * as Movie from '../controllers/movie';
 
 const router = Router();
 
 router.get('/', async (req, res) => {
-    const movies = await Movie.getMovies();
+    const movieType = req.query.type || MOVIE_TYPES.now_playing; 
+    const movies = await Movie.getMovies(movieType);
     return res.send(movies);
 });
 

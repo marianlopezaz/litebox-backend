@@ -5,6 +5,7 @@ import express from 'express';
 import cors from 'cors';
 import models, { connectDb } from './models';
 import routes from './routes';
+import { initDatabase } from "./db/db_connection";
 
 const app = express();
 app.use(cors());
@@ -21,33 +22,15 @@ app.use(async (req, res, next) => {
 
 app.use('/movies', routes.movies);
 
-
-const createUsersWithMovies = async () => {
-  const user1 = new models.User({
-    username: 'Mariano Lopez'
-  });
-
-  const movie1 = new models.Movie({
-    name: 'First movie',
-    user: user1._id
-  })
-
-  await user1.save();
-  await movie1.save();
-};
-
-const eraseDatabaseOnSync = true;
-connectDb().then(async () => {
-  if (eraseDatabaseOnSync) {
-    await Promise.all([
-      models.User.deleteMany({}),
-      models.Movie.deleteMany({}),
-    ]);
-    createUsersWithMovies();
+initDatabase().then((connection) => {
+  if (!(connection instanceof Error)) {
+    const port = process.env.PORT || 8080;
+    app.listen(port, () =>
+      console.log(`Example app listening on port ${port}!`),
+    );
+  } else {
+    console.log(`Ocurrió un error al conectar con la base de datos`);
   }
-  const port = process.env.PORT || 8080;
-  app.listen(port, () =>
-    console.log(`Example app listening on port ${port}!`),
-  );
-});
+
+})
 
