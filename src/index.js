@@ -20,13 +20,16 @@ app.use(async (req, res, next) => {
   next();
 });
 
+app.get('/', function(req, res) { 
+  res.sendFile(__dirname + '/index.html');
+});
 app.use('/movies', routes.movies);
 
 initDatabase().then((connection) => {
   if (!(connection instanceof Error)) {
     const port = process.env.PORT || 8080;
     app.listen(port, () =>
-      console.log(`Example app listening on port ${port}!`),
+      console.log(`Liteboxapp running on port: ${port}!`),
     );
   } else {
     console.log(`Ocurrió un error al conectar con la base de datos`);
