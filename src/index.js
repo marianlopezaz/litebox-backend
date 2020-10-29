@@ -5,7 +5,7 @@ import models, { connectDb } from './models';
 import routes from './routes';
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.SERVER_PORT;
 
 app.use(cors());
 app.use(express.json());
