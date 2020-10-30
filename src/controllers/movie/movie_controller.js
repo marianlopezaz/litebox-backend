@@ -92,7 +92,7 @@ const getMovieData = async (movieType) => {
 const getFinalImageUrl = (basePath, movieData, movieType) => {
     const BASE_PATH = basePath;
     const IMAGE_SIZE = FILE_SIZES.original;
-    const IMAGE_PATH = movieType === MOVIE_TYPES.now_playing ? FILES_PATH_TYPE.backdrop_path : FILES_PATH_TYPE.poster_path;
+    const IMAGE_PATH = movieType !== MOVIE_TYPES.popular ? FILES_PATH_TYPE.backdrop_path : FILES_PATH_TYPE.poster_path;
     const FILE_ID = movieData[IMAGE_PATH];
     return `${BASE_PATH}${IMAGE_SIZE}${FILE_ID}`
 }
