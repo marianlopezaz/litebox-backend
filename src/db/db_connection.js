@@ -19,6 +19,7 @@ export const initDatabase = async () => {
                 await Promise.all([
                     models.User.deleteMany({}),
                     models.Movie.deleteMany({}),
+                    models.Category.deleteMany({})
                 ]);
                 seedDatabase();
             }
