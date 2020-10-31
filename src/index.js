@@ -3,13 +3,12 @@ import "regenerator-runtime/runtime";
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import models, { connectDb } from './models';
+import models from './models';
 import routes from './routes';
 import { initDatabase } from "./db/db_connection";
 
 const app = express();
 app.use(cors());
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(async (req, res, next) => {

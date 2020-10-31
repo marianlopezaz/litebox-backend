@@ -7,6 +7,12 @@ const moviesSchema = new mongoose.Schema(
       required: true,
     },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    image: {
+      type: String,
+    },
+    category: {
+      type: String,
+    }
   },
   { timestamps: true },
 );
