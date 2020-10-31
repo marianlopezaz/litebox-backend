@@ -23,6 +23,7 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 app.use('/movies', routes.movies);
+app.use('/categories', routes.categories);
 
 initDatabase().then((connection) => {
   if (!(connection instanceof Error)) {
