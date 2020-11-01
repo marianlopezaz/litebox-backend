@@ -1,6 +1,9 @@
+import { MOVIE_TYPES } from '../../config/config';
 import Movie from '../../models/movie';
+import * as CategoryController from '../category';
 import { uploadFile } from '../../services/as3/as3_service';
 import { prepareMoviesData } from '../../services/movies/get_movie_services';
+import Category from '../../models/category';
 
 
 export async function addMovie(userId, movie) {
@@ -14,14 +17,13 @@ export async function addMovie(userId, movie) {
                 const newMovie = new Movie({
                     name: NAME,
                     user: OWNER,
-                    image: res.Loacation,
+                    image: res['Location'],
                     category: CATEGORY
                 });
                 await newMovie.save();
                 return newMovie;
 
             } catch (error) {
-                console.log(error);
                 return new Error(error);
             }
 
@@ -35,13 +37,16 @@ export async function addMovie(userId, movie) {
 }
 
 export async function getMovies(movieType) {
-    let movies = [];
-    if (movieType === 'uploaded') {
-        movies = await Movie.find();
+    let movies = []
+    if (movieType === MOVIE_TYPES.uploaded) {
+        movies = Movie.find({}).then((movies) => {
+            return Category.populate(movies, { path: 'category' }).then((data) => {
+                return data;
+            })
+        })
     } else {
         movies = prepareMoviesData(movieType);
     }
     return movies;
 }
-
 

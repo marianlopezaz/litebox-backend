@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     const movies = await Movie.getMovies(movieType);
     return res.send(movies);
 });
-
+ 
 router.post('/',upload.single('movieImage'), async (req, res) => {
     const movie = {
         name: req.body.movieName,
@@ -20,7 +20,6 @@ router.post('/',upload.single('movieImage'), async (req, res) => {
     };
     const userId = req.context.user._id
     const newMovie = await Movie.addMovie(userId, movie);
-    console.log(newMovie);
     return res.send(newMovie);
 });
 

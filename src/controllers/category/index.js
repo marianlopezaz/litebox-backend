@@ -1,3 +1,4 @@
 export {
-    getCategories
+    getCategories,
+    getCategory
  } from "./category_controller";

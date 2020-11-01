@@ -25,5 +25,6 @@ export const FILES_PATH_TYPE = {
 export const MOVIE_TYPES = {
     now_playing: 'now_playing',
     upcoming: 'upcoming',
-    popular: 'popular'
+    popular: 'popular',
+    uploaded: 'uploaded'
 }
